@@ -44,7 +44,7 @@ export const login = async (req: Request, res: Response) => {
         where: {email}
     })
       if(!existingUser){
-        return res.status(400).json({message: "User not found"});
+        return res.status(400).json({message: "Invalid credentials"});
       }
     const matchedPassword = await bcrypt.compare(password, existingUser.password);
       if(!matchedPassword){
@@ -55,7 +55,7 @@ export const login = async (req: Request, res: Response) => {
         process.env.JWT_SECRET as string,
         {expiresIn: "1d"}
       );
-      res.status(200).json({
+      return res.status(200).json({
         message: "Login Successful",
         token,
         user: {
