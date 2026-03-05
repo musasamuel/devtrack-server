@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import prisma from "./lib/prisma";
 import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
+import projectRouter from "./routes/project.routes";
 
 
 dotenv.config();
@@ -16,6 +17,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
+app.use("/api/projects", projectRouter)
 
 app.get("/", async (_req, res) => {
   try {
