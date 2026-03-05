@@ -5,7 +5,7 @@ import prisma from "./lib/prisma";
 import authRouter from "./routes/auth.routes";
 import userRouter from "./routes/user.routes";
 import projectRouter from "./routes/project.routes";
-
+import taskRouter from "./routes/task.routes";
 
 dotenv.config();
 
@@ -15,9 +15,10 @@ const PORT = 4000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/auth", authRouter)
-app.use("/api/user", userRouter)
-app.use("/api/projects", projectRouter)
+app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
+app.use("/api/projects", projectRouter);
+app.use("/api/tasks", taskRouter);
 
 app.get("/", async (_req, res) => {
   try {
