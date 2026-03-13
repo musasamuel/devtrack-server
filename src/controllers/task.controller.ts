@@ -3,14 +3,16 @@ import prisma from "../lib/prisma";
 
 export const task = async (req: Request, res: Response) => {
     try{
-        const { title, projectId} = req.body;
+        const { title, projectId, dueDate, priority} = req.body;
         if (!title || !projectId){
             return res.status(400).json({message: "Not found"})
         }
         const newTask = await prisma.task.create({
             data: {
                title,
-               projectId: Number(projectId)
+               projectId: Number(projectId),
+               dueDate,
+               priority,
             }
         })
         return res.status(200).json(newTask);

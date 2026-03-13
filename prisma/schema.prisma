@@ -13,19 +13,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  projects  Project[]
+  id          Int      @id @default(autoincrement())
+  name        String?
+  email       String   @unique
+  password    String
+  createdAt   DateTime @default(now())
+  projects    Project[]
+  members     ProjectMember[]
+  activities  Activity[]
 }
 model Project {
-  id        Int      @id @default(autoincrement())
-  name      String
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  tasks     Task[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  tasks       Task[]
+  description String?
+  deadline    DateTime?
+  members     ProjectMember[]
+  activities  Activity[]
 }
 model Task {
   id         Int      @id @default(autoincrement())
@@ -34,4 +41,24 @@ model Task {
   projectId  Int
   project    Project  @relation(fields: [projectId], references: [id])
   createdAt  DateTime @default(now())
+  dueDate    DateTime?
+  priority   String   @default("MEDIUM")
+}
+model ProjectMember {
+  id         Int       @id @default(autoincrement())
+  projectId  Int
+  project    Project   @relation(fields: [projectId], references: [id])
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id])
+  role       String?
+  joinedAt   DateTime  @default(now())
+}
+model Activity {
+  id          Int       @id @default(autoincrement())
+  projectId   Int
+  project     Project   @relation(fields: [projectId], references: [id])
+  userId      Int
+  user      User      @relation(fields: [userId], references: [id])
+  action      String?
+  createdAt   DateTime  @default(now())
 }
