@@ -36,6 +36,7 @@ export const register = async (req: Request, res: Response) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
 export const login = async (req: Request, res: Response) => {
     try{
       const { email, password} = req.body
@@ -62,7 +63,8 @@ export const login = async (req: Request, res: Response) => {
         token,
         user: {
             id: existingUser.id,
-            email: existingUser.email
+            email: existingUser.email,
+            name: existingUser.name
         }
       })
     } catch(err){

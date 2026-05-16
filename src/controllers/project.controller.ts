@@ -25,11 +25,10 @@ export const project = async (req: Request, res: Response) => {
 export const projects = async (req: Request, res: Response) => {
     try{
 
-        const allProject = await prisma.project.findMany({
-            where: {
-                userId: Number(req.userId)
-            }
-        })
+       const allProject = await prisma.project.findMany({
+        where: { userId: Number(req.userId) },
+        include: { tasks: true }
+      })
         return res.status(200).json(allProject);
     }catch (error){
         res.status(500).json({message: "Error in returning project"})
