@@ -12,9 +12,12 @@ import activityRouter from "./routes/activity.routes";
 dotenv.config();
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://devtrack-client-b64n.vercel.app"],
+  credentials: true
+}));
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
